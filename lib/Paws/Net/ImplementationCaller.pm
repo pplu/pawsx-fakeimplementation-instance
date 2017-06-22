@@ -3,17 +3,24 @@ package Paws::Net::ImplementationCaller;
   with 'Paws::Net::RetryCallerRole', 'Paws::Net::CallerRole';
   use Module::Runtime qw/require_module/;
 
-  has _implementations => (is => 'ro', isa => 'HashRef', default => sub { { } });
+  has implementations => (is => 'ro', isa => 'HashRef', default => sub { { } });
+  has undef_implementations => (is => 'ro', isa => 'Str', default => 'load');
 
   sub get_implementation {
     my ($self, $service) = @_;
-    return $self->_implementations->{ $service } if (defined $self->_implementations->{ $service });
+    return $self->implementations->{ $service } if (defined $self->implementations->{ $service });
 
-    my $class = "Paws::Net::ImplementationCaller::$service";
-    require_module($class);
+    if ($self->undef_implementations eq 'die') {
+      die "No implementation for $service";
+    } elsif ($self->undef_implementations eq 'load') {
+      my $class = "Paws::Net::ImplementationCaller::$service";
+      require_module($class);
 
-    $self->_implementations->{ $service } = $class->new;
-    return $self->_implementations->{ $service };
+      $self->implementations->{ $service } = $class->new;
+      return $self->implementations->{ $service };
+    } else {
+      die "Don't know what to do with undef_implementations value of " . $self->undef_implementations;
+    }
   }
 
   sub send_request {

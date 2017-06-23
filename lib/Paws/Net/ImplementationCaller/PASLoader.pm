@@ -71,12 +71,12 @@ package Paws::Net::ImplementationCaller::PASLoader {
     if ($@) {
       if (ref($@)) {
         if ($@->isa('Paws::API::Server::Exception')){
-          $return = Paws::Exception->new(message => $@->message, code => $@->code);
+          $return = Paws::Exception->new(message => $@->message, code => $@->code, request_id => $uuid);
         } else {
-          $return = Paws::Exception->new(message => "$@", code => 'InternalError'); 
+          $return = Paws::Exception->new(message => "$@", code => 'InternalError', request_id => $uuid); 
         }
       } else {
-        $return = Paws::Exception->new(message => $@, code => 'InternalError');
+        $return = Paws::Exception->new(message => $@, code => 'InternalError', request_id => $uuid);
       }
     }
     return $return;

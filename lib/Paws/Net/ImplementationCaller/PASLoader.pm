@@ -64,6 +64,7 @@ package Paws::Net::ImplementationCaller::PASLoader {
       api_method => $call_obj->_api_call,
       user => $self->get_user,
       service => $service->service,
+      origin => '127.0.0.1',
     );
 
     my $return = eval { $instance->process };

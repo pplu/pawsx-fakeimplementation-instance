@@ -15,6 +15,7 @@ package Paws::Net::ImplementationCaller::PASDefaultLogger {
 package Paws::Net::ImplementationCaller::PASLoader {
   use Moose;
   use Paws;
+  use UUID qw/uuid/;
 
   has logger => (
     is => 'ro',
@@ -51,7 +52,7 @@ package Paws::Net::ImplementationCaller::PASLoader {
   sub invoke {
     my ($self, $service, $call_obj) = @_;
 
-    my $uuid = '00000000-0000-0000-0000-000000000000';
+    my $uuid = uuid();
 
     my $imp_class = $self->implementation_class_for($call_obj);
     my $instance = $imp_class->new(

@@ -15,6 +15,7 @@ package Paws::Net::ImplementationCaller::PASDefaultLogger {
 package Paws::Net::ImplementationCaller::PASLoader {
   use Moose;
   use Paws;
+  use Paws::API::Response;
   use UUID qw/uuid/;
 
   has logger => (
@@ -79,7 +80,11 @@ package Paws::Net::ImplementationCaller::PASLoader {
         $return = Paws::Exception->new(message => "$@", code => 'InternalError', request_id => $uuid);
       }
     }
-    return $return;
+    if (not defined $call_obj->_returns or $call_obj->_returns eq 'Paws::API::Response') {
+      return Paws::API::Response->new(request_id => $uuid);
+    } else {
+      return $return;
+    }
   }
 
   sub implementation_class_for {

@@ -4,6 +4,8 @@ package Paws::SQS::Implementation::CreateQueue;
 
   sub evaluate_access { 1; }
 
+  has injectable => (is => 'ro', default => 'queue.localhost');
+
   sub process {
     my $self = shift;
 
@@ -14,10 +16,11 @@ package Paws::SQS::Implementation::CreateQueue;
 
     Paws::API::Server::Exception->throw(message => "My QueueName has invalid chars", code => 'InvalidName') if ($name !~ m/^[A-Za-z0-9_-]{1,80}$/);
 
+    my $host = $self->injectable;
 
     Paws->load_class($self->returns_a);
     return $self->returns_a->new(
-      QueueUrl => "http://queue.localhost/queues/$name",
+      QueueUrl => "http://$host/queues/$name",
     );
   }
 

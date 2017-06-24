@@ -45,6 +45,11 @@ package Paws::Net::ImplementationCaller::PASLoader {
     }
   );
 
+  has extra_attributes_for_call => (
+    is => 'ro',
+    isa => 'HashRef',
+  );
+
   sub get_user {
     my $self = shift;
     die "Please implement get_user"; 
@@ -54,6 +59,8 @@ package Paws::Net::ImplementationCaller::PASLoader {
     my ($self, $service, $call_obj) = @_;
 
     my $uuid = uuid();
+
+    my %extra_atts = %{ $self->extra_attributes_for_call } if (defined $self->extra_attributes_for_call);
 
     my $imp_class = $self->implementation_class_for($call_obj);
     my $instance = $imp_class->new(
@@ -66,6 +73,7 @@ package Paws::Net::ImplementationCaller::PASLoader {
       user => $self->get_user,
       service => $service->service,
       origin => '127.0.0.1',
+      %extra_atts
     );
 
     my $return = eval { $instance->process };

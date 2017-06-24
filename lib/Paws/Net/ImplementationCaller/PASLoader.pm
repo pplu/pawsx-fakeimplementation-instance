@@ -76,7 +76,7 @@ package Paws::Net::ImplementationCaller::PASLoader {
           $return = Paws::Exception->new(message => "$@", code => 'InternalError', request_id => $uuid); 
         }
       } else {
-        $return = Paws::Exception->new(message => $@, code => 'InternalError', request_id => $uuid);
+        $return = Paws::Exception->new(message => "$@", code => 'InternalError', request_id => $uuid);
       }
     }
     return $return;

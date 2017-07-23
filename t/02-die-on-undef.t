@@ -7,18 +7,17 @@ use Test::More;
 use Test::Exception;
 
 use Paws;
-use Paws::Net::ImplementationCaller;
+use Paws::Net::MultiplexCaller;
 use Paws::Net::ImplementationCaller::SQS;
 
 my $paws1 = Paws->new(
   config => {
-    caller => Paws::Net::ImplementationCaller->new(
-      implementations => {
-        'SQS' => Paws::Net::ImplementationCaller::SQS->new(
+    caller => Paws::Net::MultiplexCaller->new(
+      caller_for => {
+        SQS => Paws::Net::ImplementationCaller::SQS->new(
           user => undef,
         ),
-      },
-      undef_implementations => 'die',
+      }
     )
   }
 );
@@ -32,6 +31,6 @@ lives_ok(sub {
 my $ec2 = $paws1->service('EC2', region => 'test');
 throws_ok(sub {
   $result = $ec2->AllocateAddress;
-}, qr/^No implementation for EC2/, "Call to AllocateAddress on EC2 dies (won't load an EC2 implementation)");
+}, qr/^Can't find a caller for EC2/, "Call to AllocateAddress on EC2 dies (no default caller)");
 
 done_testing;

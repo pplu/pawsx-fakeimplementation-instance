@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-use_ok('Paws::Net::ImplementationCaller');
+use_ok('Paws::Net::MultiplexCaller');
 TODO: {
   local $TODO = 'Not yet ready';
 

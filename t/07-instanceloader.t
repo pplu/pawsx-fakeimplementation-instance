@@ -6,13 +6,13 @@ use Test::More;
 use Test::Exception;
 
 use Paws;
-use Paws::Net::ImplementationCaller;
+use Paws::Net::MultiplexCaller;
 use Paws::Net::ImplementationCaller::InstanceLoader;
 
 my $paws1 = Paws->new(
   config => {
-    caller => Paws::Net::ImplementationCaller->new(
-      implementations => {
+    caller => Paws::Net::MultiplexCaller->new(
+      caller_for => {
         SQS => Paws::Net::ImplementationCaller::InstanceLoader->new(
           api_class => 'FakeSQS', 
         ),

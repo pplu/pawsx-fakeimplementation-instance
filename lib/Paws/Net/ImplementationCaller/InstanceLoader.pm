@@ -19,7 +19,7 @@ package Paws::Net::ImplementationCaller::InstanceLoader {
     }
   );
 
-  sub invoke {
+  sub do_call {
     my ($self, $service, $call_obj) = @_;
 
     my $uuid = uuid;

@@ -5,8 +5,6 @@ use warnings;
 
 use Test::More;
 
-use_ok('Paws::Net::MultiplexCaller');
-use_ok('Paws::Net::ImplementationCaller::PASLoader');
-use_ok('Paws::Net::ImplementationCaller::InstanceLoader');
+use_ok('PawsX::FakeImplementation::Instance');
 
 done_testing;

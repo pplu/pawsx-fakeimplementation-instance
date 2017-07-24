@@ -1,4 +1,4 @@
-package Paws::Net::ImplementationCaller::InstanceLoader {
+package PawsX::FakeImplementation::Instance {
   use Moose;
   use Paws;
   use UUID qw/uuid/;

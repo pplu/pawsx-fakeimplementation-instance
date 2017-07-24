@@ -2,6 +2,7 @@ requires 'Paws';
 requires 'UUID';
 
 on test => sub {
+  requires 'Paws::Net::MultiplexCaller';
   requires 'Paws::Kinesis::MemoryCaller';
   requires 'Test::More';
   requires 'Test::Exception';

@@ -1,4 +1,5 @@
 requires 'Paws';
+requires 'UUID';
 
 on test => sub {
   requires 'Paws::Kinesis::MemoryCaller';

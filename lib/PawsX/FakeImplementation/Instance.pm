@@ -3,6 +3,8 @@ package PawsX::FakeImplementation::Instance {
   use Paws;
   use UUID qw/uuid/;
 
+  our $VERSION = '0.01';
+
   has api_class => (
     is => 'ro',
     isa => 'Str',

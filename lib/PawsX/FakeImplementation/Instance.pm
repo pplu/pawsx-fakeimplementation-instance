@@ -11,13 +11,19 @@ package PawsX::FakeImplementation::Instance {
     required => 1,
   );
 
+  has params => (
+    is => 'ro',
+    isa => 'HashRef',
+    default => sub { {} },
+  );
+
   has instance => (
     is => 'ro',
     lazy => 1,
     default => sub {
       my $self = shift;
       Paws->load_class($self->api_class);
-      return $self->api_class->new;
+      return $self->api_class->new(%{ $self->params });
     }
   );
 

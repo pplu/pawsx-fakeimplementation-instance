@@ -19,7 +19,7 @@ package Paws::Net::MultiplexCaller;
     my $result = $self->get_implementation($self->service_from_callobject($call_object))
              ->do_call($service, $call_object);
 
-    if ($result->isa('Paws::Exception')){
+    if (ref($result) and $result->isa('Paws::Exception')){
       $result->throw;
     }
 

@@ -3,7 +3,7 @@ package PawsX::FakeImplementation::Instance {
   use Paws;
   use UUID qw/uuid/;
 
-  our $VERSION = '0.01';
+  our $VERSION = '0.02';
 
   with 'Paws::Net::CallerRole';
 

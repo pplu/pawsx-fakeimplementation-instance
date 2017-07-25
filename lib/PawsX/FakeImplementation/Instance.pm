@@ -5,6 +5,10 @@ package PawsX::FakeImplementation::Instance {
 
   our $VERSION = '0.01';
 
+  with 'Paws::Net::CallerRole';
+
+  sub caller_to_response {}
+
   has api_class => (
     is => 'ro',
     isa => 'Str',

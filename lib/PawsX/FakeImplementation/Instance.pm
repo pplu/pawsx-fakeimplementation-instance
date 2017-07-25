@@ -42,12 +42,12 @@ package PawsX::FakeImplementation::Instance {
     if ($@) {
       if (ref($@)) {
         if ($@->isa('Paws::Exception')){
-          $return = $@;
+          $@->throw;
         } else {
-          $return = Paws::Exception->new(message => "$@", code => 'InternalError', request_id => $uuid); 
+          Paws::Exception->throw(message => "$@", code => 'InternalError', request_id => $uuid); 
         }
       } else {
-        $return = Paws::Exception->new(message => "$@", code => 'InternalError', request_id => $uuid);
+        Paws::Exception->throw(message => "$@", code => 'InternalError', request_id => $uuid);
       }
     } else {
       if (not defined $call_obj->_returns or $call_obj->_returns eq 'Paws::API::Response') {
